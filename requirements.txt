@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+pillow
+opencv-python
+numpy
+psutil
+onnxruntime
+# Target Snapdragon Windows ARM64 runtime, install on device only:
+# onnxruntime-qnn
+# Optional development OCR/classifier packages:
+# easyocr
+# sentence-transformers
+# qai-hub-models
+# qai-hub-models-cli
