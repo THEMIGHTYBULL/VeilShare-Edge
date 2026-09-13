@@ -1,0 +1,4 @@
+{
+  "status": "not yet run",
+  "note": "Placeholder. Replace with real output from: python scripts/benchmark.py --input demo/sample_inputs/fake_dashboard.png --repeat 20 --output benchmarks/mac_cpu_dev_run.json — do not fabricate numbers."
+}

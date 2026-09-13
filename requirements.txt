@@ -1,14 +1,24 @@
-fastapi
-uvicorn
-pillow
-opencv-python
-numpy
-psutil
-onnxruntime
-# Target Snapdragon Windows ARM64 runtime, install on device only:
+# --- Core backend (CPU development mode) ---
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9     # FastAPI multipart/form uploads
+pillow>=10.0
+numpy>=1.24
+psutil>=5.9
+onnxruntime>=1.17
+
+# --- Testing ---
+pytest>=8.0
+httpx>=0.27                 # used by fastapi.testclient
+
+# --- Target Snapdragon Windows ARM64 runtime (install on device only) ---
 # onnxruntime-qnn
-# Optional development OCR/classifier packages:
+
+# --- Optional: real OCR / semantic models (heavy — pull torch) ---
 # easyocr
 # sentence-transformers
 # qai-hub-models
 # qai-hub-models-cli
+
+# --- Optional: live screen capture on desktop machines ---
+# mss

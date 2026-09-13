@@ -4,8 +4,11 @@
   "private": true,
   "description": "On-device privacy firewall for screen sharing and screenshots on Snapdragon-powered HP PCs.",
   "scripts": {
-    "dev": "echo 'Add Vite/React UI here after MVP wireframe'",
-    "backend": "python backend/app/main.py"
+    "dev": "python backend/app/main.py",
+    "backend": "python -m uvicorn backend.app.main:app --reload",
+    "demo:inputs": "python scripts/generate_demo_inputs.py",
+    "benchmark": "python scripts/benchmark.py --input demo/sample_inputs/fake_dashboard.png --repeat 20",
+    "test": "python -m pytest tests/ -q"
   },
   "keywords": [
     "on-device-ai",
