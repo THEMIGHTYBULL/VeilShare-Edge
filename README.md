@@ -164,7 +164,7 @@ Cloud usage is limited to optional development-time model optimization/profiling
 ### Development mode on macOS/Windows/Linux CPU fallback
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/veilshare-edge.git
+git clone https://github.com/THEMIGHTYBULL/veilshare-edge.git
 cd veilshare-edge
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
