@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# Node / frontend build artifacts (the UI itself is dependency-free)
+node_modules/
+dist/
+build/
+
+# Model assets — fetch locally, never commit (size + licensing)
+models/assets/*
+!models/assets/.gitkeep
+*.onnx
+*.bin
+*.pt
+*.pth
+*.safetensors
+
+# Demo OCR sidecars are generated on first boot (they contain synthetic
+# token strings that GitHub push protection cannot distinguish from real
+# secrets). Regenerate with: python scripts/generate_demo_inputs.py
+demo/sample_inputs/*.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local run artifacts
+*.log
+.env

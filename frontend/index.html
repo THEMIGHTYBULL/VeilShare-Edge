@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VeilShare Edge — On-device privacy firewall</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 2 4 5.5v5.2c0 5 3.4 9.6 8 10.8 4.6-1.2 8-5.8 8-10.8V5.5L12 2Z" fill="url(#g)" stroke="#22d3ee" stroke-width="1.2"/>
+        <path d="M8.5 12l2.4 2.4 4.6-4.8" stroke="#e6fbff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs><linearGradient id="g" x1="4" y1="2" x2="20" y2="21"><stop stop-color="#0e7490" stop-opacity=".55"/><stop offset="1" stop-color="#1e3a8a" stop-opacity=".55"/></linearGradient></defs>
+      </svg>
+      <div class="brand-text">
+        <h1>VeilShare Edge</h1>
+        <p>On-device privacy firewall for screen sharing &amp; screenshots</p>
+      </div>
+    </div>
+    <div class="chips">
+      <span class="chip chip-ok" id="chipPrivacy">⬤ Local-only</span>
+      <span class="chip" id="chipRuntime">checking runtime…</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==================== LEFT: source + scan ==================== -->
+    <aside class="col col-left">
+      <section class="card">
+        <h2><span class="step">1</span> Choose source</h2>
+        <div id="demoGrid" class="demo-grid" aria-label="Demo screenshots"></div>
+        <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-label="Upload a screenshot">
+          <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" hidden />
+          <p><strong>Drop a screenshot</strong> or click to browse</p>
+          <p class="muted">The file never leaves this machine</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2><span class="step">2</span> Scan locally</h2>
+        <button id="scanBtn" class="btn btn-primary" disabled>Scan Locally</button>
+        <p class="hint" id="scanHint">Pick a demo or upload an image first.</p>
+      </section>
+
+      <section class="card card-subtle">
+        <h2>How it works</h2>
+        <ol class="howto">
+          <li>OCR reads the screen <em>on this device</em></li>
+          <li>Regex + checksum detectors find secrets &amp; PII</li>
+          <li>A semantic layer catches confidential phrasing</li>
+          <li>Redacted Safe Share is rendered locally</li>
+        </ol>
+      </section>
+    </aside>
+
+    <!-- ==================== CENTER: viewer ==================== -->
+    <section class="col col-center">
+      <div class="card viewer-card">
+        <div class="viewer-toolbar">
+          <div class="legend" id="legend">
+            <span class="lg lg-critical">Critical</span>
+            <span class="lg lg-high">High</span>
+            <span class="lg lg-medium">Medium</span>
+            <span class="lg lg-low">Low</span>
+          </div>
+          <div class="view-toggle" id="viewToggle" hidden>
+            <button data-view="findings" class="vt-btn active">Findings</button>
+            <button data-view="compare" class="vt-btn">Safe Share</button>
+          </div>
+        </div>
+
+        <div id="viewer" class="viewer">
+          <div id="emptyState" class="empty-state">
+            <div class="empty-art">🛡️</div>
+            <p><strong>Nothing loaded yet</strong></p>
+            <p class="muted">Pick a demo screenshot or drop your own — everything is processed on this device.</p>
+          </div>
+          <canvas id="canvas" hidden></canvas>
+          <div id="compare" class="compare" hidden>
+            <img id="beforeImg" alt="Original screenshot" draggable="false" />
+            <div id="afterClip"><img id="afterImg" alt="Redacted safe share" draggable="false" /></div>
+            <div id="divider"><div class="knob">↔</div></div>
+            <span class="tag tag-left">Original</span>
+            <span class="tag tag-right">Safe Share</span>
+          </div>
+          <div id="scanSpinner" class="overlay-msg" hidden>
+            <div class="ring"></div>
+            <p>Scanning locally — no data leaves this machine…</p>
+          </div>
+        </div>
+
+        <div class="statusbar" id="statusbar">No scan yet.</div>
+      </div>
+    </section>
+
+    <!-- ==================== RIGHT: analysis ==================== -->
+    <aside class="col col-right">
+      <section class="card" id="summaryCard">
+        <h2>Risk summary</h2>
+        <div id="summaryBody" class="muted">Run a scan to see the risk report.</div>
+      </section>
+
+      <section class="card" id="safeShareCard">
+        <h2><span class="step">3</span> Create Safe Share</h2>
+        <div class="mode-row" role="radiogroup" aria-label="Redaction mode">
+          <label><input type="radio" name="mode" value="blur" checked /><span>Blur</span></label>
+          <label><input type="radio" name="mode" value="blackout" /><span>Blackout</span></label>
+          <label><input type="radio" name="mode" value="pixelate" /><span>Pixelate</span></label>
+        </div>
+        <button id="safeShareBtn" class="btn btn-primary" disabled>Create Safe Share</button>
+        <a id="downloadBtn" class="btn btn-ghost" hidden download="safe_share.png">⬇ Download PNG</a>
+      </section>
+
+      <section class="card">
+        <h2>Findings <span class="count-pill" id="findingCount"></span></h2>
+        <div id="findingsList" class="muted">No findings yet.</div>
+      </section>
+
+      <section class="card">
+        <h2>Privacy proof</h2>
+        <div id="privacyPanel" class="muted">Scan to measure network activity.</div>
+      </section>
+
+      <section class="card">
+        <h2>Runtime / backend</h2>
+        <div id="runtimePanel" class="muted">Loading…</div>
+      </section>
+    </aside>
+  </main>
+
+  <footer>
+    VeilShare Edge demo data is 100% synthetic — fake company, fake people, fake secrets.
+    NPU acceleration is reported only when the QNN Execution Provider is genuinely present.
+  </footer>
+
+  <div id="toast" class="toast" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>

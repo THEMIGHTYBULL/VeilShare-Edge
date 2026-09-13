@@ -1,0 +1,159 @@
+{
+  "meta": {
+    "generated_at": "2026-09-13T21:08:49.085644+00:00",
+    "input": "demo/sample_inputs/fake_dashboard.png",
+    "repeat": 20,
+    "platform": "Linux 6.1.158+ (x86_64)",
+    "processor": "x86_64",
+    "python": "3.11.2",
+    "ocr_engine": "simulated-sidecar",
+    "semantic_engine": "semantic-keyword-fallback",
+    "onnxruntime": {
+      "version": "1.30.0",
+      "available_providers": [
+        "AzureExecutionProvider",
+        "CPUExecutionProvider"
+      ],
+      "qnn_execution_provider": false
+    },
+    "acceleration_status": "cpu-fallback"
+  },
+  "latency": {
+    "ocr": {
+      "mean_ms": 0.11,
+      "median_ms": 0.11,
+      "p95_ms": 0.15,
+      "min_ms": 0.1,
+      "max_ms": 0.15
+    },
+    "detect": {
+      "mean_ms": 0.93,
+      "median_ms": 0.9,
+      "p95_ms": 1.01,
+      "min_ms": 0.86,
+      "max_ms": 1.11
+    },
+    "total": {
+      "mean_ms": 1.04,
+      "median_ms": 1.02,
+      "p95_ms": 1.16,
+      "min_ms": 0.98,
+      "max_ms": 1.24
+    }
+  },
+  "memory": {
+    "rss_start_mb": 55.5,
+    "rss_peak_mb": 55.9
+  },
+  "findings_per_run": 10,
+  "privacy_last_run": {
+    "monitor": "psutil (process-level)",
+    "established_outbound_before": 0,
+    "established_outbound_after": 0,
+    "new_outbound_connections_during_scan": 0,
+    "cloud_calls_during_scan": 0,
+    "note": "Measured with psutil around the scan. 0 means no outbound connection was opened."
+  },
+  "runs": [
+    {
+      "ocr_ms": 0.13,
+      "detect_ms": 1.11,
+      "total_ms": 1.24
+    },
+    {
+      "ocr_ms": 0.12,
+      "detect_ms": 0.91,
+      "total_ms": 1.03
+    },
+    {
+      "ocr_ms": 0.12,
+      "detect_ms": 0.9,
+      "total_ms": 1.02
+    },
+    {
+      "ocr_ms": 0.11,
+      "detect_ms": 0.9,
+      "total_ms": 1.01
+    },
+    {
+      "ocr_ms": 0.1,
+      "detect_ms": 0.95,
+      "total_ms": 1.05
+    },
+    {
+      "ocr_ms": 0.1,
+      "detect_ms": 0.89,
+      "total_ms": 0.99
+    },
+    {
+      "ocr_ms": 0.13,
+      "detect_ms": 0.86,
+      "total_ms": 0.99
+    },
+    {
+      "ocr_ms": 0.1,
+      "detect_ms": 0.96,
+      "total_ms": 1.06
+    },
+    {
+      "ocr_ms": 0.12,
+      "detect_ms": 1.0,
+      "total_ms": 1.12
+    },
+    {
+      "ocr_ms": 0.15,
+      "detect_ms": 1.01,
+      "total_ms": 1.16
+    },
+    {
+      "ocr_ms": 0.15,
+      "detect_ms": 0.95,
+      "total_ms": 1.1
+    },
+    {
+      "ocr_ms": 0.11,
+      "detect_ms": 0.9,
+      "total_ms": 1.0
+    },
+    {
+      "ocr_ms": 0.1,
+      "detect_ms": 0.88,
+      "total_ms": 0.98
+    },
+    {
+      "ocr_ms": 0.11,
+      "detect_ms": 0.87,
+      "total_ms": 0.98
+    },
+    {
+      "ocr_ms": 0.1,
+      "detect_ms": 0.98,
+      "total_ms": 1.07
+    },
+    {
+      "ocr_ms": 0.1,
+      "detect_ms": 0.9,
+      "total_ms": 1.0
+    },
+    {
+      "ocr_ms": 0.1,
+      "detect_ms": 0.9,
+      "total_ms": 1.0
+    },
+    {
+      "ocr_ms": 0.11,
+      "detect_ms": 0.97,
+      "total_ms": 1.07
+    },
+    {
+      "ocr_ms": 0.11,
+      "detect_ms": 0.89,
+      "total_ms": 1.0
+    },
+    {
+      "ocr_ms": 0.1,
+      "detect_ms": 0.88,
+      "total_ms": 0.98
+    }
+  ]
+}

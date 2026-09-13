@@ -37,7 +37,48 @@ The product behaves like a pre-flight privacy check:
 
 ---
 
-## 3. Key Features
+## 3. Repository Structure
+
+```text
+VeilShare-Edge/
+├── README.md               # this file
+├── LICENSE                 # MIT
+├── requirements.txt        # core deps (CPU dev mode) + optional extras
+├── package.json            # convenience scripts (dev / test / benchmark)
+├── backend/
+│   └── app/                # FastAPI service + all detection logic
+│       ├── main.py         #   API endpoints + local web UI host
+│       ├── pipeline.py     #   scan orchestration (OCR → detect → risk)
+│       ├── ocr.py          #   EasyOCR / simulated-sidecar / none (labeled)
+│       ├── detectors.py    #   regex + Luhn/Verhoeff + entropy detectors
+│       ├── semantic.py     #   MiniLM classifier + keyword fallback (labeled)
+│       ├── risk.py         #   severity scoring
+│       ├── redact.py       #   blur / blackout / pixelate renderer
+│       ├── privacy.py      #   psutil connection-diff privacy proof
+│       ├── runtime_info.py #   ONNX Runtime / QNN provider telemetry
+│       ├── demo_data.py    #   synthetic demo screenshots + sidecars
+│       └── checksums.py    #   Luhn + Verhoeff implementations
+├── frontend/               # local web UI (vanilla JS, no build step)
+├── demo/sample_inputs/     # 4 synthetic demo PNGs (OCR sidecars generated on boot)
+├── scripts/
+│   ├── generate_demo_inputs.py  # regenerate demo screenshots
+│   └── benchmark.py             # latency/memory/provider harness
+├── tests/                  # 58 pytest tests (detectors → API end-to-end)
+├── docs/                   # architecture, API, demo script, privacy, …
+├── models/                 # model strategy (weights never committed)
+├── benchmarks/             # recorded performance evidence
+└── assets/screenshots/     # UI screenshots (added on demo day)
+```
+
+Documentation index: [Architecture](docs/ARCHITECTURE.md) ·
+[API](docs/API.md) · [Demo Script](docs/DEMO_SCRIPT.md) ·
+[Privacy Model](docs/PRIVACY.md) ·
+[Snapdragon Deployment](docs/SNAPDRAGON_DEPLOYMENT.md) ·
+[Submission Checklist](docs/SUBMISSION.md)
+
+---
+
+## 4. Key Features
 
 ### MVP features
 
@@ -66,7 +107,7 @@ The product behaves like a pre-flight privacy check:
 
 ---
 
-## 4. Architecture
+## 5. Architecture
 
 ```text
 USER
@@ -98,7 +139,7 @@ USER ACTION: share, export, or fix exposure
 
 ---
 
-## 5. AI Model Strategy
+## 6. AI Model Strategy
 
 ### OCR model
 
@@ -127,7 +168,7 @@ USER ACTION: share, export, or fix exposure
 
 ---
 
-## 6. Snapdragon Integration
+## 7. Snapdragon Integration
 
 VeilShare Edge is designed for Snapdragon-powered HP PCs, especially Windows on Snapdragon machines. The intended acceleration path is:
 
@@ -145,7 +186,7 @@ This repository includes CPU fallback so development can happen on non-Snapdrago
 
 ---
 
-## 7. On-Device Processing
+## 8. On-Device Processing
 
 At runtime, the app is designed so that:
 
@@ -159,20 +200,34 @@ Cloud usage is limited to optional development-time model optimization/profiling
 
 ---
 
-## 8. Installation
+## 9. Installation
 
 ### Development mode on macOS/Windows/Linux CPU fallback
 
 ```bash
-git clone https://github.com/THEMIGHTYBULL/veilshare-edge.git
-cd veilshare-edge
+git clone https://github.com/THEMIGHTYBULL/VeilShare-Edge.git
+cd VeilShare-Edge
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-python backend/app/main.py
+python backend/app/main.py  # or: python -m uvicorn backend.app.main:app --reload
 ```
 
-Open the local UI or API at the printed localhost URL.
+Open **http://127.0.0.1:8000** — the local web UI loads with the four
+built-in demo screenshots ready to scan. The server binds to 127.0.0.1 by
+default (privacy-first: no LAN exposure).
+
+Run the test suite:
+
+```bash
+python -m pytest tests/ -q        # 58 tests
+```
+
+Regenerate the synthetic demo inputs (optional — they are committed):
+
+```bash
+python scripts/generate_demo_inputs.py --force
+```
 
 ### Target mode on Snapdragon-powered Windows PC
 
@@ -186,7 +241,7 @@ Then download or compile the OCR and embedding model assets using Qualcomm AI Hu
 
 ---
 
-## 9. Usage
+## 10. Usage
 
 1. Open VeilShare Edge.
 2. Click **Load Demo Screenshot** or **Capture Window**.
@@ -197,7 +252,7 @@ Then download or compile the OCR and embedding model assets using Qualcomm AI Hu
 
 ---
 
-## 10. Demo Instructions
+## 11. Demo Instructions
 
 Use only synthetic data during judging.
 
@@ -212,7 +267,7 @@ Do not show real secrets or personal identifiers.
 
 ---
 
-## 11. Performance Evidence
+## 12. Performance Evidence
 
 Do not commit fabricated numbers. Before final submission, run:
 
@@ -234,14 +289,20 @@ Store outputs in:
 
 ```text
 benchmarks/
-├── mac_cpu_dev_run.json
-├── snapdragon_qnn_run.json
+├── linux_cpu_dev_run.json         # recorded: CPU container, simulated-sidecar OCR
+├── mac_cpu_dev_run.json           # placeholder until run
+├── snapdragon_qnn_run.json        # placeholder until run on real hardware
 └── qualcomm_ai_hub_profile_links.md
 ```
 
+The recorded dev run (`linux_cpu_dev_run.json`) measures detector + pipeline
+overhead with the simulated-sidecar OCR engine — real EasyOCR latency must
+be measured on the target machine. See `benchmarks/README.md` for the
+protocol.
+
 ---
 
-## 12. Privacy
+## 13. Privacy
 
 VeilShare Edge is built for privacy-sensitive workflows:
 
@@ -254,7 +315,7 @@ VeilShare Edge is built for privacy-sensitive workflows:
 
 ---
 
-## 13. Technical Stack
+## 14. Technical Stack
 
 - Frontend: React + TypeScript, or a simple local web UI for MVP
 - Backend: Python FastAPI
@@ -267,7 +328,7 @@ VeilShare Edge is built for privacy-sensitive workflows:
 
 ---
 
-## 14. Future Roadmap
+## 15. Future Roadmap
 
 1. Snapdragon-validated QNN inference path
 2. Live selected-window scanning
@@ -279,7 +340,7 @@ VeilShare Edge is built for privacy-sensitive workflows:
 
 ---
 
-## 15. Screenshots / Placeholders
+## 16. Screenshots / Placeholders
 
 ```text
 assets/screenshots/dashboard.png       # Main scan screen
@@ -290,7 +351,7 @@ assets/screenshots/snapdragon_panel.png# Runtime/backend telemetry
 
 ---
 
-## 16. Known Limitations
+## 17. Known Limitations
 
 - NPU acceleration requires an actual Snapdragon-powered Windows PC and compatible runtime.
 - OCR may miss very small, distorted, low-contrast, or rapidly changing text.
@@ -300,7 +361,7 @@ assets/screenshots/snapdragon_panel.png# Runtime/backend telemetry
 
 ---
 
-## 17. Credits
+## 18. Credits
 
 - Qualcomm AI Hub Models and Workbench for model optimization/deployment workflows
 - ONNX Runtime QNN Execution Provider for Snapdragon hardware-accelerated ONNX inference
@@ -309,6 +370,6 @@ assets/screenshots/snapdragon_panel.png# Runtime/backend telemetry
 
 ---
 
-## 18. License
+## 19. License
 
 MIT License. See `LICENSE`.

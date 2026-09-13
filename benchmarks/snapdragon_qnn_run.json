@@ -1,0 +1,4 @@
+{
+  "status": "not yet run",
+  "note": "Placeholder. Replace with real output recorded on a Snapdragon-powered Windows PC with onnxruntime-qnn installed and QNNExecutionProvider verified (see docs/SNAPDRAGON_DEPLOYMENT.md). Do not fabricate numbers."
+}
