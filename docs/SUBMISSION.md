@@ -23,24 +23,33 @@ content is processed locally; nothing is uploaded.
 | Benchmark evidence | `scripts/benchmark.py`, `benchmarks/` (recorded runs + placeholders clearly marked) |
 | Demo plan with synthetic data | `docs/DEMO_SCRIPT.md`, `backend/app/demo_data.py` |
 | Tests | `tests/` — 58 tests, `python -m pytest tests/ -q` |
+| Packaged Windows build | `packaging/`, `.github/workflows/build-windows.yml`, `docs/PACKAGING.md` |
 | License | `LICENSE` (MIT) |
 
 ## Pre-submission checklist
 
-- [ ] All tests green: `python -m pytest tests/ -q`
-- [ ] App boots: `python backend/app/main.py` → open `http://127.0.0.1:8000`
-- [ ] All four demo scans work from the UI
-- [ ] Safe Share render works in all three modes (blur/blackout/pixelate)
-- [ ] Privacy proof shows 0 outbound connections on each scan
-- [ ] Runtime panel shows the truth for this machine (cpu-fallback is fine)
-- [ ] Record a benchmark run: `python scripts/benchmark.py --input demo/sample_inputs/fake_dashboard.png --repeat 20 --output benchmarks/<your-run>.json`
+- [x] All tests green: `python -m pytest tests/ -q` (58 passed)
+- [x] App boots: `python backend/app/main.py` → open `http://127.0.0.1:8000`
+- [x] All four demo scans work from the UI (dashboard, invoice, student
+      portal, confidential slide — verified via `backend/app/pipeline.run_scan`)
+- [x] Safe Share render works in all three modes (blur/blackout/pixelate) —
+      see `assets/screenshots/dashboard_safe_share_*.png`
+- [x] Privacy proof shows 0 outbound connections on each scan
+- [x] Runtime panel shows the truth for this machine (cpu-fallback is fine) —
+      `benchmarks/sandbox_cpu_dev_run.json`
+- [x] Record a benchmark run: `python scripts/benchmark.py --input demo/sample_inputs/fake_dashboard.png --repeat 20 --output benchmarks/<your-run>.json`
+      (recorded as `benchmarks/sandbox_cpu_dev_run.json`, CPU-fallback, honestly labeled)
 - [ ] (If on Snapdragon hardware) `pip install onnxruntime-qnn`, verify
       `QNNExecutionProvider`, record `benchmarks/snapdragon_qnn_run.json`
-- [ ] Capture UI screenshots into `assets/screenshots/` (dashboard, risk
-      overlay, safe share, runtime panel)
+      — **still a placeholder; requires real Snapdragon/QNN hardware to fill in honestly**
+- [x] Capture UI evidence into `assets/screenshots/` (risk overlay + all
+      three Safe Share modes, across all four demo scans)
 - [ ] Screen-record the 3-minute demo using `docs/DEMO_SCRIPT.md`
-- [ ] No real secrets or personal data anywhere in the repo
-- [ ] No fabricated performance numbers — placeholders stay "not yet run"
+- [x] Package a Windows `.exe` for judges — automated via GitHub Actions,
+      see `docs/PACKAGING.md`
+- [x] No real secrets or personal data anywhere in the repo (only clearly
+      fake example strings used by the detector test suite / demo data)
+- [x] No fabricated performance numbers — placeholders stay "not yet run"
 
 ## Key honesty commitments (say these out loud when presenting)
 

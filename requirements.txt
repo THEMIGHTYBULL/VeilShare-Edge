@@ -22,3 +22,6 @@ httpx>=0.27                 # used by fastapi.testclient
 
 # --- Optional: live screen capture on desktop machines ---
 # mss
+
+# --- Optional: packaging a standalone Windows .exe (see docs/PACKAGING.md) ---
+# pyinstaller
