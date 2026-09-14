@@ -67,14 +67,38 @@ VeilShare-Edge/
 ├── docs/                   # architecture, API, demo script, privacy, …
 ├── models/                 # model strategy (weights never committed)
 ├── benchmarks/             # recorded performance evidence
-└── assets/screenshots/     # UI screenshots (added on demo day)
+├── packaging/              # PyInstaller spec + desktop launcher (Windows .exe)
+└── assets/screenshots/     # real pipeline output — risk overlays + Safe Share
 ```
 
 Documentation index: [Architecture](docs/ARCHITECTURE.md) ·
 [API](docs/API.md) · [Demo Script](docs/DEMO_SCRIPT.md) ·
 [Privacy Model](docs/PRIVACY.md) ·
 [Snapdragon Deployment](docs/SNAPDRAGON_DEPLOYMENT.md) ·
+[Packaging (Windows .exe)](docs/PACKAGING.md) ·
 [Submission Checklist](docs/SUBMISSION.md)
+
+## Screenshots
+
+Real output from this repository's own detection + redaction pipeline
+(`backend/app/pipeline.py`, `backend/app/redact.py`) run against the
+synthetic demo inputs in `demo/sample_inputs/` — not mockups.
+
+| Risk overlay (findings + severity) | Safe Share (blur redaction) |
+|---|---|
+| ![risk overlay](assets/screenshots/dashboard_risk_overlay.png) | ![safe share](assets/screenshots/dashboard_safe_share_blur.png) |
+
+More scans (invoice, student portal, confidential slide) and the two other
+redaction modes (blackout, pixelate) are in `assets/screenshots/` — see
+`assets/README.md` for the full index.
+
+## Windows executable
+
+A packaged `VeilShareEdge.exe` is built automatically on every push via
+GitHub Actions (`.github/workflows/build-windows.yml`) on a genuine Windows
+runner — download it from the repo's **Actions** tab, unzip, and run, no
+Python install required. See [docs/PACKAGING.md](docs/PACKAGING.md) for
+details and for building it yourself.
 
 ---
 
